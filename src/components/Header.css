@@ -47,5 +47,6 @@ section button {
 section img {
   height: 430px;
   border-radius: 10px;
-  margin-top: 20px;
+  margin: 20px 10% 0 10%;
+  justify-items: center;
 }
