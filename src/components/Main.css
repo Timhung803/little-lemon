@@ -29,6 +29,7 @@ cards {
   background-color: #edefee;
   border-radius: 10px;
   height: 90%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
 cards > img:first-child {
@@ -37,6 +38,7 @@ cards > img:first-child {
   margin: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+  box-shadow: none;
 }
 
 cards p {

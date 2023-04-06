@@ -49,4 +49,5 @@ section img {
   border-radius: 10px;
   margin: 20px 10% 0 10%;
   justify-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
 }
