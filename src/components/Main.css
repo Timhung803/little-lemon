@@ -1,0 +1,91 @@
+main {
+  height: 100%;
+}
+
+main > section {
+  display: flex;
+  gap: 18px;
+  margin: 0 5%;
+}
+
+main > section h1 {
+  font-family: markazi Text;
+  font-size: 64px;
+  color: black;
+  margin: 0;
+  padding-left: 0;
+}
+main > section:first-child > button {
+  margin-left: 25%;
+}
+
+main > section:first-child {
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+cards {
+  flex: 0.333333;
+  background-color: #edefee;
+  border-radius: 10px;
+  height: 90%;
+}
+
+cards > img:first-child {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+cards p {
+  color: black;
+}
+
+#logo {
+  width: 30px;
+  height: 30px;
+  margin: 0;
+}
+
+dishname {
+  display: flex;
+  align-items: center;
+  gap: 20%;
+  margin-top: 20px;
+}
+
+dishname > h3 {
+  color: black;
+  font-size: 16px;
+  padding-left: 10%;
+}
+
+dishname > p {
+  font-size: 16px;
+  color: black;
+  margin: 0;
+}
+
+description p {
+  font-size: 14px;
+  font-weight: 400;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+description section {
+  display: flex;
+  gap: 10%;
+  align-items: center;
+  margin: 0;
+  justify-content: start;
+}
+
+description section p,
+svg {
+  font-weight: 800;
+  margin: 0;
+  margin-bottom: 30px;
+}

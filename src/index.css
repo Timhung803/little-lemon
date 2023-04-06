@@ -18,5 +18,5 @@ code {
     "header header"
     "main main"
     "footer footer"; */
-  grid-template-rows: auto 1fr 3fr 1fr;
+  grid-template-rows: auto 1fr 1fr 1fr;
 }
