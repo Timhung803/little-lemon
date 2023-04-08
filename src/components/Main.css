@@ -21,6 +21,7 @@ main > section:first-child > button {
 
 main > section:first-child {
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 16px;
 }
 
