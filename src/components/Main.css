@@ -59,23 +59,24 @@ dishname {
   margin-top: 20px;
 }
 
-dishname > h3 {
+section dishname > h3 {
   color: black;
   font-size: 16px;
   padding-left: 10%;
 }
 
-dishname > p {
+section dishname > p {
   font-size: 16px;
   color: black;
   margin: 0;
 }
 
-description p {
+section description p {
   font-size: 14px;
   font-weight: 400;
   padding-left: 10%;
   padding-right: 10%;
+  color: #495e57;
 }
 
 description section {
@@ -91,4 +92,5 @@ svg {
   font-weight: 800;
   margin: 0;
   margin-bottom: 30px;
+  color: #495e57;
 }
