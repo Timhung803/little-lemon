@@ -39,8 +39,8 @@ function Footer() {
             <li>Phome: 012 345 6789</li>
             <li id="hour">Opening Hours:</li>
             <ul id="date">
-              <li>Mon - Fri: 9:00 - 22:00</li>
-              <li>Sat - Sun: 10:00 - 24:00</li>
+              <li>Mon - Fri: 12:00 - 22:00</li>
+              <li>Sat - Sun: 11:00 - 22:00</li>
             </ul>
           </ul>
         </nav>
