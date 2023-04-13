@@ -10,13 +10,21 @@ main > section {
 
 main > section h1 {
   font-family: markazi Text;
-  font-size: 64px;
+  font-size: 60px;
   color: black;
   margin: 0;
   padding-left: 0;
 }
 main > section:first-child > button {
   margin-left: 25%;
+  height: 40px;
+  width: 240px;
+  background-color: #f4ce14;
+  border-style: none;
+  border-radius: 15px;
+  font-family: "Karla", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 main > section:first-child {

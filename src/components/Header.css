@@ -12,27 +12,27 @@ section {
   margin: 45px 5% 0 5%;
   font-family: "Karla", sans-serif;
 }
-section h1 {
+.hero-text h1 {
   font-size: 68px;
   font-family: markazi Text;
   color: #f4ce14;
   padding-left: 12%;
   margin: 10px 0 0 0;
 }
-section h3 {
+.hero-text h3 {
   font-size: 40px;
   color: #ffffff;
   padding-left: 12%;
   margin: 0;
 }
-section p {
+.hero-text p {
   font-size: 24px;
   color: #ffffff;
   padding-left: 12%;
   margin: 10px 0 8% 0;
   font-weight: 600;
 }
-section button {
+.hero-text button {
   height: 40px;
   width: 240px;
   margin-left: 12%;

@@ -5,7 +5,7 @@ function Header() {
   return (
     <header>
       <article>
-        <section>
+        <section className="hero-text">
           <h1>Little Lemon</h1>
           <h3>Chicage</h3>
           <p>
