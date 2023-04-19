@@ -120,7 +120,7 @@ function BookingDetail() {
             rows="3"
           ></textarea>
         </fieldset>
-        <button>Submit</button>
+        <button>Confirm</button>
       </form>
     </div>
   );
