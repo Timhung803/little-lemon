@@ -1,29 +1,55 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import "./BookingForm.css";
+
+const timeoptions = [
+  { label: "Booking Time", value: "Booking Time", disabled: "true" },
+  { label: "12:00 pm", value: "12:00 pm", available: "" },
+  { label: "13:00 pm", value: "13:00 pm", available: "" },
+  { label: "14:00 pm", value: "14:00 pm", available: "" },
+  { label: "15:00 pm", value: "15:00 pm", available: "" },
+  { label: "16:00 pm", value: "16:00 pm", available: "" },
+  { label: "17:00 pm", value: "17:00 pm", available: "" },
+  { label: "18:00 pm", value: "18:00 pm", available: "" },
+  { label: "19:00 pm", value: "19:00 pm", available: "" },
+  { label: "20:00 pm", value: "20:00 pm", available: "" },
+  { label: "21:00 pm", value: "21:00 pm", available: "" },
+  { label: "22:00 pm", value: "22:00 pm", available: "" },
+];
+
+const occasionoptions = [
+  { label: "Your Occasion", value: "Your Occasion", disabled: "true" },
+  { label: "Birthday", value: "Birthday" },
+  { label: "Anniversary", value: "Anniversary" },
+  { label: "Engagement", value: "Engagement" },
+];
+
+const date = new Date();
+const currentDate = date.getDate();
+date.setDate(currentDate);
+const Value = date.toLocaleDateString("en-CA");
+
+const initialState = {
+  location: "indoor",
+  selectdate: { Value },
+  bookingtime: "",
+  occasion: "",
+};
+
+function reducer(state, action) {
+  return { ...state, [action.input]: action.value };
+}
 
 function BookingForm() {
-  const date = new Date();
-  const currentDate = date.getDate();
-  date.setDate(currentDate);
-  const defaultValue = date.toLocaleDateString("en-CA");
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [bookingDate, setBookingDate] = useState({ defaultValue });
-  const handleBookingDate = (e) => setBookingDate(e.target.value);
-
-  const [time, setTime] = useState("");
-  const handleSelectTime = (e) => {
-    setTime(e.target.value);
-  };
-
-  const [seating, setSeating] = useState("indoor");
-  const handleSeating = (e) => {
-    setSeating(e.target.value);
-  };
-
-  const [occasion, setOccasion] = useState("");
-  const handleOccasion = (e) => {
-    setOccasion(e.target.value);
-  };
+  function onChange(e) {
+    const action = {
+      input: e.target.name,
+      value: e.target.value,
+    };
+    dispatch(action);
+  }
 
   const [options, setOptions] = useState({
     guest: 1,
@@ -37,108 +63,132 @@ function BookingForm() {
     });
   };
 
-  const [isValid, setValid] = useState(false);
-  const validate = () => {
-    return time.length & occasion.length;
-  };
-  useEffect(() => {
-    const isValid = validate();
-    setValid(isValid);
-  }, [time, occasion]);
+  function validateState(state) {
+    return state.bookingtime.length > 0;
+  }
 
   const navigate = useNavigate();
 
-  const handleBooking = () => {
+  const handleBooking = (e) => {
     navigate("/detail", {
-      state: { options, time, occasion, seating, bookingDate },
+      state: {
+        location: state.location,
+        selectdate: state.selectdate,
+        bookingtime: state.bookingtime,
+        occasion: state.occasion,
+        options,
+      },
     });
+    e.preventDefault();
   };
   return (
     <bookingform>
       <fieldset id="location">
-        <label htmlFor="location">Indoors</label>
-        <input
-          type="radio"
-          value="indoor"
-          name="location"
-          checked={seating === "indoor"}
-          onChange={handleSeating}
-        />
-        <label htmlFor="location">Outdoors</label>
-        <input
-          type="radio"
-          value="outdoor"
-          name="location"
-          checked={seating === "outdoor"}
-          onChange={handleSeating}
-        />
+        <seating className="seating">
+          <label htmlFor="location">Indoors</label>
+          <input
+            className="rad-seating"
+            type="radio"
+            name="location"
+            value="indoor"
+            onChange={onChange}
+            defaultChecked
+          />
+        </seating>
+        <seating className="seating">
+          <label htmlFor="location">Outdoors</label>
+          <input
+            className="rad-seating"
+            type="radio"
+            name="location"
+            value="outdoor"
+            onChange={onChange}
+          />
+        </seating>
       </fieldset>
       <fieldset id="res-info">
-        <label htmlFor="res-date">Select date:</label>
-        <input
-          type="date"
-          id="res-date"
-          defaultValue={defaultValue}
-          min={defaultValue}
-          onChange={handleBookingDate}
-        />
-        <label htmlFor="guest">
-          <span>Number of guests:</span>
-          <button
-            disabled={options.guest <= 1}
-            onClick={() => handleOption("guest", "d")}
-          >
-            -
-          </button>
-          <span>{options.guest}</span>
-          <button onClick={() => handleOption("guest", "i")}>+</button>
-        </label>
+        <bookingdate className="bookingdate">
+          <label htmlFor="res-date">Select date:</label>
+          <input
+            className="res-date"
+            type="date"
+            name="selectdate"
+            min={Value}
+            defaultValue={Value}
+            onChange={onChange}
+          />
+        </bookingdate>
+        <guestnumber className="guestnumber">
+          <label htmlFor="guest">
+            <span>Number of guests:</span>
+          </label>
+          <guestcounter>
+            <button
+              className="guest-btm"
+              disabled={options.guest <= 1}
+              onClick={() => handleOption("guest", "d")}
+            >
+              -
+            </button>
+            <span>{options.guest}</span>
+            <button
+              className="guest-btm"
+              onClick={() => handleOption("guest", "i")}
+            >
+              +
+            </button>
+          </guestcounter>
+        </guestnumber>
       </fieldset>
       <form action="">
-        <fieldset>
-          <label htmlFor="res-time">Select time:</label>
-          <select
-            required="required"
-            id="res-time "
-            value={time}
-            onChange={handleSelectTime}
-          >
-            <option disabled selected value="">
-              --Please choose an option--
-            </option>
-            <option value="11:00 am">11:00 am</option>
-            <option value="12:00 pm">12:00 pm</option>
-            <option value="13:00 pm">13:00 pm</option>
-            <option value="14:00 pm">14:00 pm</option>
-            <option value="15:00 pm">15:00 pm</option>
-            <option value="16:00 pm">16:00 pm</option>
-            <option value="17:00 pm">17:00 pm</option>
-            <option value="18:00 pm">18:00 pm</option>
-            <option value="19:00 pm">19:00 pm</option>
-            <option value="20:00 pm">20:00 pm</option>
-            <option value="21:00 pm">21:00 pm</option>
-            <option value="22:00 pm">22:00 pm</option>
-          </select>
-          <label htmlfor="occasion">Occasion:</label>
-          <select
-            id="occasion"
-            value={occasion}
-            onChange={handleOccasion}
-            required="required"
-          >
-            <option disabled selected value="">
-              --Please choose an option--
-            </option>
-            <option value="Birthday">Birthday</option>
-            <option value="Anniversary">Anniversary</option>
-            <option value="engagement">Engagement</option>
-          </select>
+        <fieldset id="sel-time">
+          <bookingtime className="bookingtime">
+            <label htmlFor="res-time">Select time:</label>
+            <select
+              required="required"
+              className="res-time"
+              name="bookingtime"
+              // type="text"
+              onChange={onChange}
+              defaultValue={timeoptions[0].label}
+            >
+              {timeoptions.map((timeoption) => (
+                <option value={timeoption.value} disabled={timeoption.disabled}>
+                  {timeoption.label}
+                </option>
+              ))}
+            </select>
+          </bookingtime>
+          <occasion className="occasions">
+            <label htmlfor="occasion">Occasion:</label>
+            <select
+              className="occasion"
+              name="occasion"
+              type="text"
+              onChange={onChange}
+              required="required"
+              defaultValue={occasionoptions[0].label}
+            >
+              {occasionoptions.map((occasionoption) => (
+                <option
+                  value={occasionoption.value}
+                  disabled={occasionoption.disabled}
+                >
+                  {occasionoption.label}
+                </option>
+              ))}
+            </select>
+          </occasion>
         </fieldset>
-        <fieldset id="booking-buttom">
-          <button type="submit" onClick={handleBooking} disabled={!isValid}>
+        <fieldset className="booking-btn-field">
+          <button
+            className={!validateState(state) ? "disabled" : "booking-button"}
+            type="submit"
+            onClick={handleBooking}
+            disabled={!validateState(state)}
+          >
             Booking Now
           </button>
-          {/* <input type="submit" value="Booking Now" onClick={handleBooking} /> */}
         </fieldset>
       </form>
     </bookingform>

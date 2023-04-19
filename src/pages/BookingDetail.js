@@ -6,12 +6,6 @@ import { useLocation } from "react-router-dom";
 function BookingDetail() {
   const location = useLocation();
 
-  const [bookingDate, setBookingDate] = useState(location.state.bookingDate);
-  const [guest, setGuests] = useState(location.state.options);
-  const [time, setTime] = useState(location.state.time);
-  const [occasion, setOccasion] = useState(location.state.occasion);
-  const [seating, setSeating] = useState(location.state.seating);
-
   const [formValue, setFormValue] = useState({
     firstname: "",
     lastname: "",
@@ -80,25 +74,24 @@ function BookingDetail() {
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-  console.log(formValue);
   return (
     <div className="bookingdetail">
       <tabledetail>
         <h1>Table Detail</h1>
         <p>
-          <strong>Date:</strong> {bookingDate.Value}
+          <strong>Date:</strong> {location.state.selectdate}
         </p>
         <p>
-          <strong>Time:</strong> {time}
+          <strong>Time:</strong> {location.state.bookingtime}
         </p>
         <p>
-          <strong>Number of guests:</strong> {guest.guest}
+          <strong>Number of guests:</strong> {location.state.options.guest}
         </p>
         <p>
-          <strong>Seating:</strong> {seating}
+          <strong>Seating:</strong> {location.state.location}
         </p>
         <p>
-          <strong>Occasion:</strong> {occasion}
+          <strong>Occasion:</strong> {location.state.occasion}
         </p>
         <button className="btn-change">Change</button>
       </tabledetail>

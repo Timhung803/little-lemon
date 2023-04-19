@@ -1,0 +1,111 @@
+#location {
+  display: flex;
+  justify-content: start;
+  border: none;
+  font-weight: 500;
+}
+
+.seating {
+  padding: 0 10%;
+  flex: 0.5;
+  display: flex;
+  align-items: center;
+}
+.rad-seating {
+  margin-left: 20px;
+  width: 20px;
+  height: 20px;
+}
+#res-info,
+#sel-time {
+  display: flex;
+  justify-content: space-between;
+  border: none;
+  font-weight: 500;
+}
+
+.bookingdate,
+.guestnumber,
+.bookingtime,
+.occasions {
+  flex: 0.5;
+  margin-left: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.res-date {
+  width: 60%;
+  margin-left: 10px;
+  height: 32px;
+  font-size: 20px;
+  font-family: "Karla", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  border: 0;
+  border-radius: 5px;
+}
+
+guestcounter {
+  display: flex;
+  width: 25%;
+  margin-left: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.guest-btm {
+  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 5px;
+  border: 0;
+}
+
+.res-time,
+.occasion {
+  width: 60%;
+  margin-left: 10px;
+  height: 32px;
+  font-size: 20px;
+  font-family: "Karla", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  border: 0;
+  border-radius: 5px;
+}
+
+.booking-btn-field {
+  display: flex;
+  justify-content: center;
+  border: none;
+  margin-top: 30px;
+}
+
+.booking-button,
+.disabled {
+  height: 40px;
+  width: 240px;
+  background-color: #f4ce14;
+  border-radius: 15px;
+  color: black;
+  font-family: "Karla", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  border-style: none;
+  box-shadow: 1px 1px 2px white;
+}
+.disabled {
+  opacity: 0.3;
+}
+
+.booking-button:active {
+  transform: scale(0.9);
+  transition-duration: 100ms;
+}
+
+input:focus,
+.res-time:focus,
+.occasion:focus {
+  outline: none;
+}
