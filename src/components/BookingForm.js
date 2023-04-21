@@ -1,48 +1,29 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./BookingForm.css";
 
-const timeoptions = [
-  { label: "Booking Time", value: "Booking Time", disabled: "true" },
-  { label: "12:00 pm", value: "12:00 pm", available: "" },
-  { label: "13:00 pm", value: "13:00 pm", available: "" },
-  { label: "14:00 pm", value: "14:00 pm", available: "" },
-  { label: "15:00 pm", value: "15:00 pm", available: "" },
-  { label: "16:00 pm", value: "16:00 pm", available: "" },
-  { label: "17:00 pm", value: "17:00 pm", available: "" },
-  { label: "18:00 pm", value: "18:00 pm", available: "" },
-  { label: "19:00 pm", value: "19:00 pm", available: "" },
-  { label: "20:00 pm", value: "20:00 pm", available: "" },
-  { label: "21:00 pm", value: "21:00 pm", available: "" },
-  { label: "22:00 pm", value: "22:00 pm", available: "" },
-];
-
-const occasionoptions = [
-  { label: "Your Occasion", value: "Your Occasion", disabled: "true" },
-  { label: "Birthday", value: "Birthday" },
-  { label: "Anniversary", value: "Anniversary" },
-  { label: "Engagement", value: "Engagement" },
-];
-
-const date = new Date();
-const currentDate = date.getDate();
-date.setDate(currentDate);
-const Value = date.toLocaleDateString("en-CA");
-
-const initialState = {
-  location: "indoor",
-  selectdate: { Value },
-  bookingtime: "",
-  occasion: "",
-};
-
-function reducer(state, action) {
-  return { ...state, [action.input]: action.value };
-}
-
 function BookingForm() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const occasionoptions = [
+    { label: "Your Occasion", value: "Your Occasion", disabled: "true" },
+    { label: "Birthday", value: "Birthday" },
+    { label: "Anniversary", value: "Anniversary" },
+    { label: "Engagement", value: "Engagement" },
+  ];
 
+  const date = new Date();
+  const currentDate = date.getDate();
+  date.setDate(currentDate);
+  const Value = date.toLocaleDateString("en-CA");
+
+  const initialState = {
+    location: "indoor",
+    occasion: "",
+  };
+
+  function reducer(state, action) {
+    return { ...state, [action.input]: action.value };
+  }
+  const [state, dispatch] = useReducer(reducer, initialState);
   function onChange(e) {
     const action = {
       input: e.target.name,
@@ -54,6 +35,7 @@ function BookingForm() {
   const [options, setOptions] = useState({
     guest: 1,
   });
+
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -63,8 +45,61 @@ function BookingForm() {
     });
   };
 
+  const [availability, setAvailability] = useState({
+    date: "",
+    time: "",
+  });
+
+  const handleAvailable = (e) => {
+    const { name, value } = e.target;
+    setAvailability({ ...availability, [name]: value });
+  };
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src =
+      "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js";
+    document.body.appendChild(script);
+    return () => document.body.appendChild(script);
+  }, []);
+
+  const seededRandom = function (seed) {
+    var m = 2 ** 35 - 31;
+    var a = 185852;
+    var s = seed % m;
+    return function () {
+      return (s = (s * a) % m) / m;
+    };
+  };
+
+  const fetchAPI = function (date) {
+    let result = [];
+    let random = seededRandom(date.getDate());
+    for (let i = 17; i <= 23; i++) {
+      if (random() < 0.5) {
+        result.push(i + ":00");
+      }
+      if (random() < 0.5) {
+        result.push(i + ":30");
+      }
+    }
+    return result;
+  };
+
+  const initializeTimes = () => {
+    const availableTimes = fetchAPI(new Date(availability.date));
+    console.log(availableTimes);
+    return availableTimes.map((time) => (
+      <option key={time} defaultValue={time}>
+        {time}
+      </option>
+    ));
+  };
+
   function validateState(state) {
-    return state.bookingtime.length > 0;
+    return availability.time.length > 0;
   }
 
   const navigate = useNavigate();
@@ -73,16 +108,17 @@ function BookingForm() {
     navigate("/detail", {
       state: {
         location: state.location,
-        selectdate: state.selectdate,
-        bookingtime: state.bookingtime,
         occasion: state.occasion,
         options,
+        availability,
       },
     });
     e.preventDefault();
   };
+
   return (
     <bookingform>
+      <div id="date-time"></div>
       <fieldset id="location">
         <seating className="seating">
           <label htmlFor="location">Indoors</label>
@@ -108,14 +144,16 @@ function BookingForm() {
       </fieldset>
       <fieldset id="res-info">
         <bookingdate className="bookingdate">
-          <label htmlFor="res-date">Select date:</label>
+          <label htmlFor="date">Select date:</label>
           <input
             className="res-date"
+            name="date"
             type="date"
-            name="selectdate"
             min={Value}
+            value={availability.date}
             defaultValue={Value}
-            onChange={onChange}
+            onChange={handleAvailable}
+            required
           />
         </bookingdate>
         <guestnumber className="guestnumber">
@@ -143,20 +181,12 @@ function BookingForm() {
       <form action="">
         <fieldset id="sel-time">
           <bookingtime className="bookingtime">
-            <label htmlFor="res-time">Select time:</label>
-            <select
-              required="required"
-              className="res-time"
-              name="bookingtime"
-              // type="text"
-              onChange={onChange}
-              defaultValue={timeoptions[0].label}
-            >
-              {timeoptions.map((timeoption) => (
-                <option value={timeoption.value} disabled={timeoption.disabled}>
-                  {timeoption.label}
-                </option>
-              ))}
+            <label htmlFor="time">Select time:</label>
+            <select name="time" onChange={handleAvailable} className="res-time">
+              <option key="default" defaultValue="">
+                Available time
+              </option>
+              {initializeTimes()}
             </select>
           </bookingtime>
           <occasion className="occasions">

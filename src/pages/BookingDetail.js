@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormInput from "../components/FormInput";
 import "./BookingDetail.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function BookingDetail() {
   const location = useLocation();
@@ -74,15 +74,38 @@ function BookingDetail() {
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
+
+  function validateConfirm() {
+    return (
+      formValue.firstname.length !== 0 &&
+      formValue.email.length !== 0 &&
+      formValue.phone.length !== 0
+    );
+  }
+
+  const navigate = useNavigate();
+  const navigateToChange = () => {
+    navigate("/booking");
+  };
+
+  const handleConfirm = () => {
+    navigate("/confirmation", {
+      state: {
+        formValue,
+      },
+    });
+    console.log(handleConfirm);
+  };
+
   return (
     <div className="bookingdetail">
       <tabledetail>
         <h1>Table Detail</h1>
         <p>
-          <strong>Date:</strong> {location.state.selectdate}
+          <strong>Date:</strong> {location.state.availability.date}
         </p>
         <p>
-          <strong>Time:</strong> {location.state.bookingtime}
+          <strong>Time:</strong> {location.state.availability.time}
         </p>
         <p>
           <strong>Number of guests:</strong> {location.state.options.guest}
@@ -93,7 +116,9 @@ function BookingDetail() {
         <p>
           <strong>Occasion:</strong> {location.state.occasion}
         </p>
-        <button className="btn-change">Change</button>
+        <button className="btn-change" onClick={navigateToChange}>
+          Change
+        </button>
       </tabledetail>
       <form onSubmit={handleSubmit} className="contactform">
         <h1>Your Contact</h1>
@@ -120,7 +145,13 @@ function BookingDetail() {
             rows="3"
           ></textarea>
         </fieldset>
-        <button>Confirm</button>
+        <button
+          onClick={handleConfirm}
+          disabled={!validateConfirm()}
+          className={!validateConfirm() ? "disabled" : "booking-button"}
+        >
+          Confirm
+        </button>
       </form>
     </div>
   );
