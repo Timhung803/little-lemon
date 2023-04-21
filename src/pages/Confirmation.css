@@ -1,0 +1,38 @@
+confirmpage {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 30%;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+confirmpage section {
+  margin-top: 5%;
+}
+
+confirmpage h3 {
+  font-family: "Karla", sans-serif;
+  font-size: 48px;
+  font-weight: 600;
+  margin: 10px;
+}
+confirmpage p {
+  font-family: "Karla", sans-serif;
+  font-size: 20px;
+}
+
+.confirm-btn {
+  height: 40px;
+  width: 240px;
+  background-color: #f4ce14;
+  border-radius: 15px;
+  color: black;
+  font-family: "Karla", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  border-style: none;
+  box-shadow: 1px 1px 2px white;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
