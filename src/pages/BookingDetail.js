@@ -33,7 +33,7 @@ function BookingDetail() {
       id: 2,
       name: "lastname",
       type: "text",
-      errorMessage: "",
+      errorMessage: " ",
       placeholder: "Last Name (Optional)",
       className: "input",
       label: "Last Name",
@@ -55,12 +55,12 @@ function BookingDetail() {
     {
       id: 4,
       name: "phone",
-      type: "text",
+      type: "tel",
       errorMessage: "Please enter a vaild phone number!",
       placeholder: "Phone Number",
       className: "input",
       label: "*Phone",
-      pattern: "^(\\d{3}[- .]?){2}\\d{4,5}$",
+      pattern: "[0-9]{3}[0-9]{3}[0-9]{3,5}",
       required: true,
     },
   ];
@@ -76,12 +76,16 @@ function BookingDetail() {
   };
 
   function validateConfirm() {
+    const regexEmail =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    const regexPhone = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{3,5})$/;
     return (
-      formValue.firstname.length !== 0 &&
-      formValue.email.length !== 0 &&
-      formValue.phone.length !== 0
+      formValue.firstname.length >= 2 &&
+      regexEmail.test(formValue.email) === true &&
+      regexPhone.test(formValue.phone) === true
     );
   }
+  console.log(formValue.phone.toString());
 
   const navigate = useNavigate();
   const navigateToChange = () => {
@@ -94,7 +98,6 @@ function BookingDetail() {
         formValue,
       },
     });
-    console.log(handleConfirm);
   };
 
   return (
