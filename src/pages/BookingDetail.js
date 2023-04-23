@@ -132,11 +132,16 @@ function BookingDetail() {
             value={formValue[input.name]}
             onChange={onChange}
             required
+            aria-label={input.label}
           />
         ))}
         <hr />
         <fieldset className="formrequest">
-          <label className="requestlabel" htmlFor="special-requests">
+          <label
+            className="requestlabel"
+            htmlFor="special-requests"
+            aria-label="special-requests"
+          >
             Special Requests:
           </label>
           <textarea
@@ -145,11 +150,13 @@ function BookingDetail() {
             onChange={(e) => setRequestText(e.target.value)}
             type="text"
             placeholder="Any Special Requests?"
+            aria-label="Any Special Requests?"
             rows="3"
           ></textarea>
         </fieldset>
         <button
           onClick={handleConfirm}
+          aria-label="On Click"
           disabled={!validateConfirm()}
           className={!validateConfirm() ? "disabled" : "booking-button"}
         >

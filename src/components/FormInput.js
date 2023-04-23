@@ -12,7 +12,9 @@ function FormInput(props) {
   return (
     <>
       <div className="formInput">
-        <label>{label}</label>
+        <label htmlFor={label} aria-label={label}>
+          {label}
+        </label>
         <input
           {...inputProps}
           onChange={onChange}
