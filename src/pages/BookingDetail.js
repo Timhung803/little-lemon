@@ -92,12 +92,13 @@ function BookingDetail() {
     navigate("/booking");
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = (e) => {
     navigate("/confirmation", {
       state: {
         formValue,
       },
     });
+    e.preventDefault();
   };
 
   return (

@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { fireEvent, render, screen } from "@testing-library/react";
+import App from "./App";
+import BookingDetail from "./pages/BookingDetail";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Feedback Form", () => {
+  test("Form button", () => {
+    const handleSubmit = jest.fn();
+    render(<BookingDetail onSubmit={handleSubmit} />);
+
+    const confirmButton = screen.getByRole("button");
+    fireEvent.click(confirmButton);
+
+    expect(handleSubmit).not.toHaveBeenCalled();
+    expect(confirmButton).toHaveAttribute("disabled");
+  });
 });
