@@ -2,7 +2,7 @@ import React, { useState, useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./BookingForm.css";
 
-function BookingForm() {
+function BookingForm(props) {
   const occasionoptions = [
     { label: "Your Occasion", value: "Your Occasion", disabled: "true" },
     { label: "Birthday", value: "Birthday" },
@@ -45,62 +45,64 @@ function BookingForm() {
     });
   };
 
-  const [availability, setAvailability] = useState({
-    date: "",
-    time: "",
-  });
+  // const [availability, setAvailability] = useState({ ...availability });
 
-  const handleAvailable = (e) => {
-    const { name, value } = e.target;
-    setAvailability({ ...availability, [name]: value });
-  };
+  // const [availability, setAvailability] = useState({
+  //   date: "",
+  //   time: "",
+  // });
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.async = true;
-    script.src =
-      "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js";
-    document.body.appendChild(script);
-    return () => document.body.appendChild(script);
-  }, []);
+  // const handleAvailable = (e) => {
+  //   const { name, value } = e.target;
+  //   setAvailability({ ...availability, [name]: value });
+  // };
 
-  const seededRandom = function (seed) {
-    var m = 2 ** 35 - 31;
-    var a = 185852;
-    var s = seed % m;
-    return function () {
-      return (s = (s * a) % m) / m;
-    };
-  };
+  // useEffect(() => {
+  //   const script = document.createElement("script");
+  //   script.type = "text/javascript";
+  //   script.async = true;
+  //   script.src =
+  //     "https://raw.githubusercontent.com/Meta-Front-End-Developer-PC/capstone/master/api.js";
+  //   document.body.appendChild(script);
+  //   return () => document.body.appendChild(script);
+  // }, []);
 
-  const fetchAPI = function (date) {
-    let result = [];
-    let random = seededRandom(date.getDate());
-    for (let i = 17; i <= 23; i++) {
-      if (random() < 0.5) {
-        result.push(i + ":00");
-      }
-      if (random() < 0.5) {
-        result.push(i + ":30");
-      }
-    }
-    return result;
-  };
+  // const seededRandom = function (seed) {
+  //   var m = 2 ** 35 - 31;
+  //   var a = 185852;
+  //   var s = seed % m;
+  //   return function () {
+  //     return (s = (s * a) % m) / m;
+  //   };
+  // };
 
-  const initializeTimes = () => {
-    const availableTimes = fetchAPI(new Date(availability.date));
-    console.log(availableTimes);
-    return availableTimes.map((time) => (
-      <option key={time} defaultValue={time}>
-        {time}
-      </option>
-    ));
-  };
+  // const fetchAPI = function (date) {
+  //   let result = [];
+  //   let random = seededRandom(date.getDate());
+  //   for (let i = 17; i <= 23; i++) {
+  //     if (random() < 0.5) {
+  //       result.push(i + ":00");
+  //     }
+  //     if (random() < 0.5) {
+  //       result.push(i + ":30");
+  //     }
+  //   }
+  //   return result;
+  // };
 
-  function validateState(state) {
-    return availability.time.length > 0;
-  }
+  // const initializeTimes = () => {
+  //   const availableTimes = fetchAPI(new Date(availability.date));
+  //   console.log(availableTimes);
+  //   return availableTimes.map((time) => (
+  //     <option key={time} defaultValue={time}>
+  //       {time}
+  //     </option>
+  //   ));
+  // };
+
+  // function validateState(state) {
+  //   return availability.time.length > 0;
+  // }
 
   const navigate = useNavigate();
 
@@ -110,7 +112,7 @@ function BookingForm() {
         location: state.location,
         occasion: state.occasion,
         options,
-        availability,
+        // availability,
       },
     });
     e.preventDefault();
@@ -150,9 +152,9 @@ function BookingForm() {
             name="date"
             type="date"
             min={Value}
-            value={availability.date}
-            defaultValue={Value}
-            onChange={handleAvailable}
+            value={props.availability}
+            // defaultValue={Value}
+            onChange={props.handleAvailable}
             required
           />
         </bookingdate>
@@ -182,11 +184,15 @@ function BookingForm() {
         <fieldset id="sel-time">
           <bookingtime className="bookingtime">
             <label htmlFor="time">Select time:</label>
-            <select name="time" onChange={handleAvailable} className="res-time">
+            <select
+              name="time"
+              onChange={props.handleAvailable}
+              className="res-time"
+            >
               <option key="default" defaultValue="">
                 Available time
               </option>
-              {initializeTimes()}
+              {props.initializeTimes()}
             </select>
           </bookingtime>
           <occasion className="occasions">
@@ -212,10 +218,12 @@ function BookingForm() {
         </fieldset>
         <fieldset className="booking-btn-field">
           <button
-            className={!validateState(state) ? "disabled" : "booking-button"}
+            className={
+              !props.validateState(state) ? "disabled" : "booking-button"
+            }
             type="submit"
             onClick={handleBooking}
-            disabled={!validateState(state)}
+            disabled={!props.validateState(state)}
           >
             Booking Now
           </button>

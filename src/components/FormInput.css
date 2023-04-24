@@ -41,15 +41,15 @@ label {
   grid-column-end: 6;
 }
 
-input:invalid[clicked="true"] ~ .error {
+input:invalid:required[clicked="true"] ~ .error {
   display: block;
   align-self: start;
 }
 
-input:invalid[clicked="true"] {
+input:invalid:required[clicked="true"] {
   border: 1px solid red;
 }
 
-input:invalid[clicked="true"] ~ .false {
+input:invalid:required[clicked="true"] ~ .false {
   border: 3px solid rebeccapurple;
 }

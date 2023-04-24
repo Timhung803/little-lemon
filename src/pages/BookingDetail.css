@@ -41,6 +41,7 @@
 .formrequest {
   display: flex;
   flex-direction: column;
+  border: 0;
 }
 
 .requesttext {

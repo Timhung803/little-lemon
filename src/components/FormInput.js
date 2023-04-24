@@ -21,6 +21,7 @@ function FormInput(props) {
           onBlur={() => inputProps.name !== "lastname" && handleChicked()}
           onFocus={() => inputProps.name === "lastname" && setClicked(false)}
           clicked={clicked.toString()}
+          required
         />
         <span className="error">{errorMessage}</span>
       </div>

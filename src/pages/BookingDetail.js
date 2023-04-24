@@ -4,7 +4,7 @@ import "./BookingDetail.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function BookingDetail() {
-  const location = useLocation();
+  // const location = useLocation();
 
   const [formValue, setFormValue] = useState({
     firstname: "",
@@ -85,7 +85,7 @@ function BookingDetail() {
       regexPhone.test(formValue.phone) === true
     );
   }
-  console.log(formValue.phone.toString());
+  // console.log(formValue.phone.toString());
 
   const navigate = useNavigate();
   const navigateToChange = () => {
@@ -103,7 +103,7 @@ function BookingDetail() {
 
   return (
     <div className="bookingdetail">
-      <tabledetail>
+      {/* <tabledetail>
         <h1>Table Detail</h1>
         <p>
           <strong>Date:</strong> {location.state.availability.date}
@@ -123,7 +123,7 @@ function BookingDetail() {
         <button className="btn-change" onClick={navigateToChange}>
           Change
         </button>
-      </tabledetail>
+      </tabledetail> */}
       <form onSubmit={handleSubmit} className="contactform">
         <h1>Your Contact</h1>
         {inputs.map((input) => (
